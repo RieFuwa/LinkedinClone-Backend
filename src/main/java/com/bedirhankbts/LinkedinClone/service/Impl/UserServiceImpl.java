@@ -22,10 +22,10 @@ import java.util.List;
 @Transactional
 @Slf4j
 public class UserServiceImpl implements UserService {
+//EXCEPTION CLASS YAZILACAK
 
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private RoleRepository roleRepository;
 
@@ -51,7 +51,6 @@ public class UserServiceImpl implements UserService {
         userCreateDto.setUserId(toCreate.getId());
         return new ResponseEntity<>(userCreateDto, HttpStatus.CREATED);
     }
-//EXCEPTION CLASS.
     @Override
     public Object addRoleToUser(Long userId, Long roleId) {
         User user = userRepository.findById(userId).orElseThrow(()->new RuntimeException("Could not found with id"));
@@ -60,6 +59,11 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         return user.getRoles().add(role);
+    }
+
+    @Override
+    public User getUserById(Long userId) {
+      return userRepository.findById(userId).orElse( null);
     }
 
     @Override

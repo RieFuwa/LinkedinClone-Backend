@@ -49,4 +49,13 @@ public class RoleServiceImpl implements RoleService {
         return new ResponseEntity<>(addRoleToUserDto, HttpStatus.CREATED);
 
     }
+
+    @Override
+    public String deleteRoleById(Long roleId) {
+        if (!roleRepository.existsById(roleId)) {
+            return "Role with id not found" +roleId+".";
+        }
+        roleRepository.deleteById(roleId);
+        return "Role with id " +roleId+ " has been deleted success.";
+    }
 }

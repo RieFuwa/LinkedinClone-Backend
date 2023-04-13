@@ -28,6 +28,12 @@ public class UserController {
         return userService.getAllUser();
     }
 
+    @GetMapping("/{userId}")
+    @Cacheable(key = "#userId",value = "User")
+    public User getUserById(@PathVariable("userId")Long userId){
+        return userService.getUserById(userId);
+    }
+
     @DeleteMapping("/{userId}")
     public String deleteUserById(@PathVariable("userId") Long userId){
         return userService.deleteUserById(userId);

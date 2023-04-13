@@ -15,4 +15,6 @@ public interface RoleService {
     List<Role> getAllRole();
 
     ResponseEntity<AddRoleToUserDto> addRoleToUser(AddRoleByUserCreateRequest addRoleByUserCreateRequest);
+
+    String deleteRoleById(Long roleId);
 }

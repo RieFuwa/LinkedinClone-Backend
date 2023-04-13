@@ -30,7 +30,10 @@ public class RoleController {
     @PostMapping("/addRoleToUser")
     public ResponseEntity<AddRoleToUserDto> addRoleToUser(@RequestBody AddRoleByUserCreateRequest AddRoleByUserCreateRequest) {
         return roleService.addRoleToUser(AddRoleByUserCreateRequest);
-
     }
 
+    @DeleteMapping("/{roleId}")
+    public String deleteRoleById(@PathVariable("roleId")Long roleId){
+        return roleService.deleteRoleById(roleId);
+    }
 }

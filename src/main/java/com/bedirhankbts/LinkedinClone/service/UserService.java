@@ -18,4 +18,5 @@ public interface UserService {
 
     Object addRoleToUser(Long userId, Long roleId);
 
+    User getUserById(Long userId);
 }
