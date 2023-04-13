@@ -13,4 +13,9 @@ public interface UserService {
     ResponseEntity<UserCreateDto> createUser(UserCreateRequest userCreateRequest);
 
     List<User> getAllUser();
+
+    String deleteUserById(Long userId);
+
+    Object addRoleToUser(Long userId, Long roleId);
+
 }

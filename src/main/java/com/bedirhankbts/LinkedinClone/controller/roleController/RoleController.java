@@ -1,6 +1,8 @@
 package com.bedirhankbts.LinkedinClone.controller.roleController;
 
+import com.bedirhankbts.LinkedinClone.dto.AddRoleToUserDto;
 import com.bedirhankbts.LinkedinClone.model.Role;
+import com.bedirhankbts.LinkedinClone.request.AddRoleByUserCreateRequest;
 import com.bedirhankbts.LinkedinClone.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,12 @@ public class RoleController {
     @GetMapping("/getAll")
     public List<Role> getAllRole() {
         return roleService.getAllRole();
+    }
+
+    @PostMapping("/addRoleToUser")
+    public ResponseEntity<AddRoleToUserDto> addRoleToUser(@RequestBody AddRoleByUserCreateRequest AddRoleByUserCreateRequest) {
+        return roleService.addRoleToUser(AddRoleByUserCreateRequest);
+
     }
 
 }

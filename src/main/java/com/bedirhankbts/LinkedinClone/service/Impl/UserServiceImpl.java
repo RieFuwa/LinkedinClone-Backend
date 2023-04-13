@@ -1,7 +1,9 @@
 package com.bedirhankbts.LinkedinClone.service.Impl;
 
 import com.bedirhankbts.LinkedinClone.dto.UserCreateDto;
+import com.bedirhankbts.LinkedinClone.model.Role;
 import com.bedirhankbts.LinkedinClone.model.User;
+import com.bedirhankbts.LinkedinClone.repository.RoleRepository;
 import com.bedirhankbts.LinkedinClone.repository.UserRepository;
 import com.bedirhankbts.LinkedinClone.request.UserCreateRequest;
 import com.bedirhankbts.LinkedinClone.service.UserService;
@@ -23,6 +25,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public ResponseEntity<UserCreateDto> createUser(UserCreateRequest newUser) {
@@ -46,10 +51,31 @@ public class UserServiceImpl implements UserService {
         userCreateDto.setUserId(toCreate.getId());
         return new ResponseEntity<>(userCreateDto, HttpStatus.CREATED);
     }
+//EXCEPTION CLASS.
+    @Override
+    public Object addRoleToUser(Long userId, Long roleId) {
+        User user = userRepository.findById(userId).orElseThrow(()->new RuntimeException("Could not found with id"));
+        Role role = roleRepository.findById(roleId).orElseThrow(()->new RuntimeException("Could not found with id"));;
+        if(role== null && user ==null){
+            return null;
+        }
+        return user.getRoles().add(role);
+    }
 
     @Override
     public List<User> getAllUser() {
         return userRepository.findAll();
     }
 
+    @Override
+    public String deleteUserById(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            return "User with id not found" +userId+".";
+        }
+        userRepository.deleteById(userId);
+        return "User with id " +userId+ " has been deleted success.";
+    }
+
 }
+
+
