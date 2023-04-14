@@ -1,11 +1,11 @@
 package com.bedirhankbts.LinkedinClone.service.Impl;
 
-import com.bedirhankbts.LinkedinClone.dto.UserCreateDto;
+import com.bedirhankbts.LinkedinClone.dto.userDto.UserCreateDto;
 import com.bedirhankbts.LinkedinClone.model.Role;
 import com.bedirhankbts.LinkedinClone.model.User;
 import com.bedirhankbts.LinkedinClone.repository.RoleRepository;
 import com.bedirhankbts.LinkedinClone.repository.UserRepository;
-import com.bedirhankbts.LinkedinClone.request.UserCreateRequest;
+import com.bedirhankbts.LinkedinClone.request.userRequest.UserCreateRequest;
 import com.bedirhankbts.LinkedinClone.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;

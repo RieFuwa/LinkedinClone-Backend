@@ -1,8 +1,8 @@
 package com.bedirhankbts.LinkedinClone.service;
 
-import com.bedirhankbts.LinkedinClone.dto.CompanyCreateDto;
+import com.bedirhankbts.LinkedinClone.dto.companyDto.CompanyCreateDto;
 import com.bedirhankbts.LinkedinClone.model.Company;
-import com.bedirhankbts.LinkedinClone.request.CompanyCreateRequest;
+import com.bedirhankbts.LinkedinClone.request.companyRequest.CompanyCreateRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 

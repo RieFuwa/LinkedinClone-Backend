@@ -1,4 +1,4 @@
-package com.bedirhankbts.LinkedinClone.dto;
+package com.bedirhankbts.LinkedinClone.dto.companyDto;
 
 import lombok.Data;
 

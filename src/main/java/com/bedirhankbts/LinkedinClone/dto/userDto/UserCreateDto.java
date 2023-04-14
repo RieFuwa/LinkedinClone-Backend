@@ -1,9 +1,9 @@
-package com.bedirhankbts.LinkedinClone.dto;
+package com.bedirhankbts.LinkedinClone.dto.userDto;
 
 import lombok.Data;
 
 @Data
-public class AddRoleToUserDto {
+public class UserCreateDto {
     private String message;
     private Long userId;
 }

@@ -1,11 +1,8 @@
 package com.bedirhankbts.LinkedinClone.controller.companyController;
 
-import com.bedirhankbts.LinkedinClone.dto.CompanyCreateDto;
-import com.bedirhankbts.LinkedinClone.dto.UserCreateDto;
+import com.bedirhankbts.LinkedinClone.dto.companyDto.CompanyCreateDto;
 import com.bedirhankbts.LinkedinClone.model.Company;
-import com.bedirhankbts.LinkedinClone.model.User;
-import com.bedirhankbts.LinkedinClone.request.CompanyCreateRequest;
-import com.bedirhankbts.LinkedinClone.request.UserCreateRequest;
+import com.bedirhankbts.LinkedinClone.request.companyRequest.CompanyCreateRequest;
 import com.bedirhankbts.LinkedinClone.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;

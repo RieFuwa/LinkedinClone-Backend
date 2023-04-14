@@ -20,6 +20,11 @@ public class Company {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "companyType_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private CompanyType companyType;
+
     private String companyName;
 
     private String companyMail;

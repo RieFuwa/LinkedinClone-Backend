@@ -1,11 +1,10 @@
 package com.bedirhankbts.LinkedinClone.controller.roleController;
 
-import com.bedirhankbts.LinkedinClone.dto.AddRoleToUserDto;
+import com.bedirhankbts.LinkedinClone.dto.roleDto.AddRoleToUserDto;
 import com.bedirhankbts.LinkedinClone.model.Role;
-import com.bedirhankbts.LinkedinClone.request.AddRoleByUserCreateRequest;
+import com.bedirhankbts.LinkedinClone.request.roleRequest.AddRoleByUserCreateRequest;
 import com.bedirhankbts.LinkedinClone.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

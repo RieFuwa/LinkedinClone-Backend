@@ -1,11 +1,13 @@
 package com.bedirhankbts.LinkedinClone.service.Impl;
 
-import com.bedirhankbts.LinkedinClone.dto.CompanyCreateDto;
+import com.bedirhankbts.LinkedinClone.dto.companyDto.CompanyCreateDto;
 import com.bedirhankbts.LinkedinClone.model.Company;
+import com.bedirhankbts.LinkedinClone.model.CompanyType;
 import com.bedirhankbts.LinkedinClone.model.User;
 import com.bedirhankbts.LinkedinClone.repository.CompanyRepository;
-import com.bedirhankbts.LinkedinClone.request.CompanyCreateRequest;
+import com.bedirhankbts.LinkedinClone.request.companyRequest.CompanyCreateRequest;
 import com.bedirhankbts.LinkedinClone.service.CompanyService;
+import com.bedirhankbts.LinkedinClone.service.CompanyTypeService;
 import com.bedirhankbts.LinkedinClone.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,17 +24,22 @@ public class CompanyServiceImpl  implements CompanyService {
     private CompanyRepository companyRepository;
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CompanyTypeService companyTypeService;
     @Override
     public ResponseEntity<CompanyCreateDto> createCompany(CompanyCreateRequest companyCreateRequest) {
         CompanyCreateDto companyCreateDto = new CompanyCreateDto();
         User user = userService.getUserById(companyCreateRequest.getUserId());
-        if(user==null){
+        CompanyType companyType = companyTypeService.getCompanyTypeById(companyCreateRequest.getCompanyTypeId());
+        if(user==null && companyType==null) {
             companyCreateDto.setMessage("Company not created. UserId not found.");
             return new ResponseEntity<>(companyCreateDto, HttpStatus.BAD_REQUEST);
         }
         Company toCreate = new Company();
         toCreate.setId(companyCreateRequest.getId());
         toCreate.setUser(user);
+        toCreate.setCompanyType(companyType);
         toCreate.setCompanyMail(companyCreateRequest.getCompanyMail());
         toCreate.setCompanyName(companyCreateRequest.getCompanyName());
         toCreate.setCompanyDetails(companyCreateRequest.getCompanyDetails());

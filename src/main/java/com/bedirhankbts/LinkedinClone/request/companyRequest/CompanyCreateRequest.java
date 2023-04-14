@@ -1,4 +1,4 @@
-package com.bedirhankbts.LinkedinClone.request;
+package com.bedirhankbts.LinkedinClone.request.companyRequest;
 
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -11,9 +11,11 @@ public class CompanyCreateRequest {
 
     private Long id;
     private Long userId;
+    private Long companyTypeId;
     private String companyName;
     private String companyMail;
     private String companyDetails;
+
 
 
 }

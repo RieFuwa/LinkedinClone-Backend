@@ -1,4 +1,4 @@
-package com.bedirhankbts.LinkedinClone.request;
+package com.bedirhankbts.LinkedinClone.request.userRequest;
 
 import lombok.Data;
 
