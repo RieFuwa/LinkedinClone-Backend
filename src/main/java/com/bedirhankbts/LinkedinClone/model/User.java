@@ -35,8 +35,11 @@ public class User {
 
     private Boolean isVerified;
 
-    private String userDetails;
+    private String userDetail;
 
+    private String userUniversity;
+
+    private String userAddress;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;

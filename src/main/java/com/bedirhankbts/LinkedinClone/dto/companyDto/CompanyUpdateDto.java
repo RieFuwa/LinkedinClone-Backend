@@ -1,10 +1,9 @@
 package com.bedirhankbts.LinkedinClone.dto.companyDto;
+
 import lombok.Data;
 
-
 @Data
-public class CompanyCreateDto {
+public class CompanyUpdateDto {
     private String message;
     private Long companyId;
-    private Long userId;
 }

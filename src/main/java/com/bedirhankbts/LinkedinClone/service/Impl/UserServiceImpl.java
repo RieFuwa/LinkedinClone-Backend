@@ -1,11 +1,13 @@
 package com.bedirhankbts.LinkedinClone.service.Impl;
 
 import com.bedirhankbts.LinkedinClone.dto.userDto.UserCreateDto;
+import com.bedirhankbts.LinkedinClone.dto.userDto.UserUpdateDto;
 import com.bedirhankbts.LinkedinClone.model.Role;
 import com.bedirhankbts.LinkedinClone.model.User;
 import com.bedirhankbts.LinkedinClone.repository.RoleRepository;
 import com.bedirhankbts.LinkedinClone.repository.UserRepository;
 import com.bedirhankbts.LinkedinClone.request.userRequest.UserCreateRequest;
+import com.bedirhankbts.LinkedinClone.request.userRequest.UserUpdateRequest;
 import com.bedirhankbts.LinkedinClone.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -41,7 +44,9 @@ public class UserServiceImpl implements UserService {
         toCreate.setUserName(newUser.getUserName());
         toCreate.setUserMail(newUser.getUserMail());
         toCreate.setUserPassword(newUser.getUserPassword());
-        toCreate.setUserDetails(newUser.getUserDetails());
+        toCreate.setUserUniversity(newUser.getUserUniversity());
+        toCreate.setUserAddress(newUser.getUserAddress());
+        toCreate.setUserDetail(newUser.getUserDetail());
         toCreate.setRoles(new ArrayList<>());
         toCreate.setCreateDate(new Date());
         toCreate.setUpdateDate(new Date());
@@ -64,6 +69,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long userId) {
       return userRepository.findById(userId).orElse( null);
+    }
+
+    @Override
+    public ResponseEntity<UserUpdateDto> userUpdateByUserId(Long userId, UserUpdateRequest updateUser) {
+        UserUpdateDto userUpdateDto = new UserUpdateDto();
+        Optional<User> user = userRepository.findById(userId);
+        User toUpdate = user.get();
+        toUpdate.setUserName(updateUser.getUserName());
+        toUpdate.setUserAddress(updateUser.getUserAddress());
+        toUpdate.setUserUniversity(updateUser.getUserUniversity());
+        toUpdate.setUserDetail(updateUser.getUserDetail());
+        toUpdate.setUserMail(updateUser.getUserMail());
+        toUpdate.getIsVerified();
+        toUpdate.getCreateDate();
+        toUpdate.getUserPassword();
+        toUpdate.setUpdateDate(new Date());
+        userUpdateDto.setMessage("User successfully updated.");
+        userUpdateDto.setUserId(toUpdate.getId());
+        userRepository.save(toUpdate);
+        return  new ResponseEntity<>(userUpdateDto,HttpStatus.CREATED);
+
+
     }
 
     @Override
