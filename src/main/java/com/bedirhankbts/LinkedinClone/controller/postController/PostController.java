@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/post")
@@ -26,16 +27,25 @@ public class PostController {
     }
     @GetMapping("/{postId}")
     public PostGetDto getOnePostByIdWithParameters(@PathVariable("postId")Long postId){
-        Post post = postService.getOnePostByIdWithParameters(postId);
-        return new PostGetDto(post);
+        return postService.getOnePostByIdWithParameters(postId);
+
     }
     @GetMapping("/getAll")
     public List<PostGetDto> getAllPost(){
-        return postService.getAllPost().stream().map(key-> new PostGetDto(key)).toList();
+        return postService.getAllPost();
     }
     @DeleteMapping("/{postId}") //USER ID SINE GORE SILME
     public String deletePostById(@PathVariable("postId") Long postId){
         return postService.deletePostById(postId);
+    }
+
+    @GetMapping("/postAnswers{connectedPostId}")
+    public List<PostGetDto> getPostAnswersByPostId(@RequestParam Optional<Long> connectedPostId){
+        return postService.getPostAnswersByPostId(connectedPostId);
+    }
+    @GetMapping("/getAllUserPost{userId}")
+    public List<PostGetDto> getAllUserPost(@RequestParam Optional<Long> userId){
+        return postService.getAllUserPost(userId);
     }
    /* @GetMapping("/getAllUserPost{userId}")
     public List<PostDto> getAllUserPost(@RequestParam Optional<Long> userId){
