@@ -81,9 +81,6 @@ public class CompanyServiceImpl  implements CompanyService {
         CompanyUpdateDto companyUpdateDto = new CompanyUpdateDto();
         Optional<Company> company = companyRepository.findById(companyId);
         Company toUpdate = company.get();
-        toUpdate.getCompanyType();
-        toUpdate.getUser();
-        toUpdate.getCreateDate();
         toUpdate.setCompanyName(updateCompany.getCompanyName());
         toUpdate.setCompanyAddress(updateCompany.getCompanyAddress());
         toUpdate.setCompanyDetails(updateCompany.getCompanyDetails());

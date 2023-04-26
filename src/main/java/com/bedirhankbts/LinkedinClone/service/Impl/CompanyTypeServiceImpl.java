@@ -28,4 +28,14 @@ public class CompanyTypeServiceImpl implements CompanyTypeService {
     public CompanyType getCompanyTypeById(Long companyTypeId) {
         return  companyTypeRepository.findById(companyTypeId).orElse(null);
     }
+
+    @Override
+    public String deleteCompanyTypeById(Long companyTypeId) {
+        if (!companyTypeRepository.existsById(companyTypeId)) {
+            return "CompanyType with id not found " +companyTypeId+".";
+        }
+        companyTypeRepository.deleteById(companyTypeId);
+        return "CompanyType with id " +companyTypeId+ " has been deleted success.";
+
+    }
 }

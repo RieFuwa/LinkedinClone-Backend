@@ -34,5 +34,9 @@ public class CompanyTypeController {
     public CompanyType getCompanyTypeById(@PathVariable("companyTypeId")Long companyTypeId){
         return companyTypeService.getCompanyTypeById(companyTypeId);
     }
+    @DeleteMapping("/{companyTypeId}")
+    public String deleteCompanyTypeById(@PathVariable("companyTypeId") Long companyTypeId){
+        return companyTypeService.deleteCompanyTypeById(companyTypeId);
+    }
 
 }

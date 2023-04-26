@@ -12,4 +12,6 @@ public interface CompanyTypeService {
     CompanyType createCompanyType(CompanyType newCompanyType);
 
     CompanyType getCompanyTypeById(Long companyTypeId);
+
+    String deleteCompanyTypeById(Long companyTypeId);
 }
