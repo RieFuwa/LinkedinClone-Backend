@@ -36,4 +36,5 @@ public class LikeController {
     public String deleteLikeById(@PathVariable("likeId") Long likeId){
         return likeService.deleteLikeById(likeId);
     }
+
 }

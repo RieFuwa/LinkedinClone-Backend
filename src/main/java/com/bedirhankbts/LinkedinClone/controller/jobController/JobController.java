@@ -1,13 +1,6 @@
 package com.bedirhankbts.LinkedinClone.controller.jobController;
-
-import com.bedirhankbts.LinkedinClone.dto.companyDto.CompanyCreateDto;
-import com.bedirhankbts.LinkedinClone.dto.companyDto.CompanyGetDto;
 import com.bedirhankbts.LinkedinClone.dto.jobDto.JobCreateDto;
 import com.bedirhankbts.LinkedinClone.dto.jobDto.JobGetDto;
-import com.bedirhankbts.LinkedinClone.dto.postDto.PostGetDto;
-import com.bedirhankbts.LinkedinClone.model.Company;
-import com.bedirhankbts.LinkedinClone.model.Job;
-import com.bedirhankbts.LinkedinClone.request.companyRequest.CompanyCreateRequest;
 import com.bedirhankbts.LinkedinClone.request.jobRequest.JobCreateRequest;
 import com.bedirhankbts.LinkedinClone.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,20 +25,28 @@ public class JobController {
     @GetMapping("/getAll")
     @Cacheable(value = "Company")
     public List<JobGetDto> getAllJob(){
-        return jobService.getAllJob().stream().map(key-> new JobGetDto(key)).toList();
+        return jobService.getAllJob();
     }
+
     @GetMapping("/{jobId}")
     public JobGetDto getJobById(@PathVariable("jobId")Long jobId){
-        Job job = jobService.getJobById(jobId);
-        return new JobGetDto(job);
+        return jobService.getOneJobWithParameters(jobId);
+
     }
 
     @DeleteMapping("/{jobId}")
     public String deleteJobById(@PathVariable("jobId") Long jobId){
         return jobService.deleteJobById(jobId);
     }
-    @GetMapping("/getAllCompanyJob{companyId}")
+
+    @GetMapping("/getAllCompanyJob/{companyId}")
     public List<JobGetDto> getAllCompanyJob(@RequestParam Optional<Long> companyId){
         return jobService.getAllCompanyJob(companyId);
     }
+
+    @GetMapping("/jobType/{jobTypeId}")
+    public List<JobGetDto> getJobByJobTypeId(@RequestParam Optional<Long> jobTypeId){
+        return jobService.getJobByJobTypeId(jobTypeId);
+    }
+
 }

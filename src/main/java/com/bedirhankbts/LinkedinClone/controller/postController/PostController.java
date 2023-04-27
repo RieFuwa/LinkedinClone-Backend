@@ -1,17 +1,11 @@
 package com.bedirhankbts.LinkedinClone.controller.postController;
-
-import com.bedirhankbts.LinkedinClone.dto.companyDto.CompanyGetDto;
 import com.bedirhankbts.LinkedinClone.dto.postDto.PostCreateDto;
 import com.bedirhankbts.LinkedinClone.dto.postDto.PostGetDto;
-import com.bedirhankbts.LinkedinClone.dto.userDto.UserCreateDto;
-import com.bedirhankbts.LinkedinClone.model.Post;
 import com.bedirhankbts.LinkedinClone.request.postRequest.PostCreateRequest;
-import com.bedirhankbts.LinkedinClone.request.userRequest.UserCreateRequest;
 import com.bedirhankbts.LinkedinClone.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -39,11 +33,11 @@ public class PostController {
         return postService.deletePostById(postId);
     }
 
-    @GetMapping("/postAnswers{connectedPostId}")
+    @GetMapping("/postAnswers/{connectedPostId}")
     public List<PostGetDto> getPostAnswersByPostId(@RequestParam Optional<Long> connectedPostId){
         return postService.getPostAnswersByPostId(connectedPostId);
     }
-    @GetMapping("/getAllUserPost{userId}")
+    @GetMapping("/getAllUserPost/{userId}")
     public List<PostGetDto> getAllUserPost(@RequestParam Optional<Long> userId){
         return postService.getAllUserPost(userId);
     }

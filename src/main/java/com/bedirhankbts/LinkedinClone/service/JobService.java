@@ -1,5 +1,6 @@
 package com.bedirhankbts.LinkedinClone.service;
 
+import com.bedirhankbts.LinkedinClone.dto.applyJobDto.ApplyJobDto;
 import com.bedirhankbts.LinkedinClone.dto.jobDto.JobCreateDto;
 import com.bedirhankbts.LinkedinClone.dto.jobDto.JobGetDto;
 import com.bedirhankbts.LinkedinClone.model.Job;
@@ -15,11 +16,15 @@ import java.util.Optional;
 public interface JobService {
     ResponseEntity<JobCreateDto> createJob(JobCreateRequest jobCreateRequest);
 
-    List<Job> getAllJob();
+    List<JobGetDto> getAllJob();
 
     String deleteJobById(Long jobId);
 
     List<JobGetDto> getAllCompanyJob(Optional<Long> companyId);
 
     Job getJobById(Long jobId);
+
+    JobGetDto getOneJobWithParameters(Long jobId);
+
+    List<JobGetDto> getJobByJobTypeId(Optional<Long> jobTypeId);
 }

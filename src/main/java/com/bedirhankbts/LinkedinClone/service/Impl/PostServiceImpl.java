@@ -99,7 +99,7 @@ public class PostServiceImpl implements PostService {
         }else
             posts= postRepository.findAll();
         return posts.stream().map(p -> {
-            List<LikeDto> likes = likeService.getAllLikesWithParam(Optional.ofNullable(null), Optional.of(p.getId()));
+            List<LikeDto> likes = likeService.getAllLikesWithParam( Optional.ofNullable(null), Optional.of(p.getId()));
             List<ReportDto> reports = reportService.getAllPostReports(Optional.of(p.getId()));
 
             return new PostGetDto(p, likes,reports);}).collect(Collectors.toList());

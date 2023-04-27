@@ -1,4 +1,5 @@
 package com.bedirhankbts.LinkedinClone.service.Impl;
+import com.bedirhankbts.LinkedinClone.dto.applyJobDto.ApplyJobDto;
 import com.bedirhankbts.LinkedinClone.dto.jobDto.JobCreateDto;
 import com.bedirhankbts.LinkedinClone.dto.jobDto.JobGetDto;
 import com.bedirhankbts.LinkedinClone.dto.likeDto.LikeDto;
@@ -7,6 +8,7 @@ import com.bedirhankbts.LinkedinClone.dto.reportDto.ReportDto;
 import com.bedirhankbts.LinkedinClone.model.*;
 import com.bedirhankbts.LinkedinClone.repository.JobRepository;
 import com.bedirhankbts.LinkedinClone.request.jobRequest.JobCreateRequest;
+import com.bedirhankbts.LinkedinClone.service.ApplyJobService;
 import com.bedirhankbts.LinkedinClone.service.CompanyService;
 import com.bedirhankbts.LinkedinClone.service.JobService;
 import com.bedirhankbts.LinkedinClone.service.JobTypeService;
@@ -26,6 +28,9 @@ public class JobServiceImpl implements JobService {
     private JobRepository jobRepository;
     @Autowired
     private JobTypeService jobTypeService;
+
+    @Autowired
+    private ApplyJobService applyJobService;
 
     @Autowired
     private CompanyService companyService;
@@ -53,8 +58,14 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public List<Job> getAllJob() {
-        return jobRepository.findAll();
+    public List<JobGetDto> getAllJob() {
+        List<Job> job;
+
+        job = jobRepository.findAll();
+        return job.stream().map(p -> {
+            List<ApplyJobDto> applyJobDtoList = applyJobService.getAllApplyJob(Optional.ofNullable(null),Optional.of(p.getId()));
+
+            return new JobGetDto(p, applyJobDtoList);}).collect(Collectors.toList());
     }
 
     @Override
@@ -75,11 +86,33 @@ public class JobServiceImpl implements JobService {
            jobs= jobRepository.findAll();
 
        return jobs.stream().map(p -> {
-           return new JobGetDto(p);}).collect(Collectors.toList());
+           List<ApplyJobDto> applyJobDtoList = applyJobService.getAllApplyJob(Optional.ofNullable(null), Optional.of(p.getId()));
+
+           return new JobGetDto(p,applyJobDtoList);}).collect(Collectors.toList());
 }
 
     @Override
     public Job getJobById(Long jobId) {
         return jobRepository.findById(jobId).orElse(null);
+    }
+
+    @Override
+    public JobGetDto getOneJobWithParameters(Long jobId) {
+        Job job = jobRepository.findById(jobId).orElse(null);
+        List<ApplyJobDto> applyJobDtoList = applyJobService.getAllApplyJob(Optional.ofNullable(null), Optional.of(jobId));
+        return new JobGetDto(job,applyJobDtoList);
+    }
+
+    @Override
+    public List<JobGetDto> getJobByJobTypeId(Optional<Long> jobTypeId) {
+        List<Job> job;
+        if(jobTypeId.isPresent()){
+            job=jobRepository.findByJobTypeId(jobTypeId.get());
+        }else
+            job = jobRepository.findAll();
+        return job.stream().map(p -> {
+            List<ApplyJobDto> applyJobDtoList = applyJobService.getAllApplyJob(Optional.ofNullable(null), Optional.of(p.getId()));
+
+            return new JobGetDto(p, applyJobDtoList);}).collect(Collectors.toList());
     }
 }
