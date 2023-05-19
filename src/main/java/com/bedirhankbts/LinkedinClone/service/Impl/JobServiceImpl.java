@@ -2,17 +2,25 @@ package com.bedirhankbts.LinkedinClone.service.Impl;
 import com.bedirhankbts.LinkedinClone.dto.applyJobDto.ApplyJobDto;
 import com.bedirhankbts.LinkedinClone.dto.jobDto.JobCreateDto;
 import com.bedirhankbts.LinkedinClone.dto.jobDto.JobGetDto;
+import com.bedirhankbts.LinkedinClone.dto.jobDto.JobUpdateDto;
 import com.bedirhankbts.LinkedinClone.dto.likeDto.LikeDto;
 import com.bedirhankbts.LinkedinClone.dto.postDto.PostGetDto;
+import com.bedirhankbts.LinkedinClone.dto.queryDto.JobApplyCount;
+import com.bedirhankbts.LinkedinClone.dto.queryDto.JobJobTypeCount;
 import com.bedirhankbts.LinkedinClone.dto.reportDto.ReportDto;
+import com.bedirhankbts.LinkedinClone.dto.userDto.UserUpdateDto;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import com.bedirhankbts.LinkedinClone.model.*;
 import com.bedirhankbts.LinkedinClone.repository.JobRepository;
 import com.bedirhankbts.LinkedinClone.request.jobRequest.JobCreateRequest;
+import com.bedirhankbts.LinkedinClone.request.jobRequest.JobUpdateRequest;
 import com.bedirhankbts.LinkedinClone.service.ApplyJobService;
 import com.bedirhankbts.LinkedinClone.service.CompanyService;
 import com.bedirhankbts.LinkedinClone.service.JobService;
 import com.bedirhankbts.LinkedinClone.service.JobTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -89,6 +97,7 @@ public class JobServiceImpl implements JobService {
            List<ApplyJobDto> applyJobDtoList = applyJobService.getAllApplyJob(Optional.ofNullable(null), Optional.of(p.getId()));
 
            return new JobGetDto(p,applyJobDtoList);}).collect(Collectors.toList());
+
 }
 
     @Override
@@ -115,4 +124,40 @@ public class JobServiceImpl implements JobService {
 
             return new JobGetDto(p, applyJobDtoList);}).collect(Collectors.toList());
     }
+
+    @Override
+    public ResponseEntity<JobUpdateDto> jobUpdateByJobId(Long jobId, JobUpdateRequest updateJob) {
+        JobUpdateDto jobUpdateDto = new JobUpdateDto();
+        Optional<Job> job = jobRepository.findById(jobId);
+        Job toUpdate = job.get();
+        toUpdate.setJobDetails(updateJob.getJobDetails());
+        jobUpdateDto.setMessage("Job successfully updated.");
+        jobUpdateDto.setJobId(toUpdate.getId());
+        jobRepository.save(toUpdate);
+        return  new ResponseEntity<>(jobUpdateDto,HttpStatus.CREATED);
+    }
+
+    @Override
+    public List<JobJobTypeCount> getJobTypeByCount() {
+        List<JobJobTypeCount> jobDto = jobRepository.queryJobTypeTitleCount();
+        return jobDto;
+    }
+
+    @Override
+    public List<JobJobTypeCount> getJobTypeByCountCompany(Long companyId) {
+        return jobRepository.queryJobTypeTitleCountCompany(companyId);
+    }
+
+    @Override
+    public List<JobApplyCount> getJobApplyByCountCompany(Long companyId) {
+        return jobRepository.queryApplyJobCountCompany(companyId);
+
+    }
+
+    @Override
+    public Long countByJobByCompany(Long companyId) {
+       return jobRepository.countByCompanyId(companyId);
+    }
+
+
 }

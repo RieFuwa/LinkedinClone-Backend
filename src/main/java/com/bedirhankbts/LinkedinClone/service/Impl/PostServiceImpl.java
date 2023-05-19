@@ -107,6 +107,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostGetDto> getAllUserPost(Optional<Long> userId) {
+
         List<Post> post;
         if(userId.isPresent()){
             post=postRepository.findByUserId(userId.get());
@@ -117,6 +118,11 @@ public class PostServiceImpl implements PostService {
             List<ReportDto> reports = reportService.getAllPostReports(Optional.of(p.getId()));
 
             return new PostGetDto(p, likes,reports);}).collect(Collectors.toList());
+    }
+
+    @Override
+    public Long getCountPostByUserId(Long userId) {
+        return postRepository.countByUserId(userId);
     }
 
 

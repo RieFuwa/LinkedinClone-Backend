@@ -1,6 +1,7 @@
 package com.bedirhankbts.LinkedinClone.controller.postController;
 import com.bedirhankbts.LinkedinClone.dto.postDto.PostCreateDto;
 import com.bedirhankbts.LinkedinClone.dto.postDto.PostGetDto;
+import com.bedirhankbts.LinkedinClone.dto.queryDto.JobApplyCount;
 import com.bedirhankbts.LinkedinClone.request.postRequest.PostCreateRequest;
 import com.bedirhankbts.LinkedinClone.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,15 @@ public class PostController {
     public String deletePostById(@PathVariable("postId") Long postId){
         return postService.deletePostById(postId);
     }
-
-    @GetMapping("/postAnswers/{connectedPostId}")
+    @GetMapping("/getCountPostByUserId/{userId}")
+    public Long getCountPostByUserId(@PathVariable("userId") Long userId){
+        return postService.getCountPostByUserId(userId);
+    }
+    @GetMapping("/postAnswers{connectedPostId}")
     public List<PostGetDto> getPostAnswersByPostId(@RequestParam Optional<Long> connectedPostId){
         return postService.getPostAnswersByPostId(connectedPostId);
     }
-    @GetMapping("/getAllUserPost/{userId}")
+    @GetMapping("/getAllUserPost{userId}")
     public List<PostGetDto> getAllUserPost(@RequestParam Optional<Long> userId){
         return postService.getAllUserPost(userId);
     }

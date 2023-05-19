@@ -51,6 +51,7 @@ public class CompanyServiceImpl  implements CompanyService {
         toCreate.setUpdateDate(new Date());
         companyRepository.save(toCreate);
         companyCreateDto.setMessage("Company successfully created.");
+        companyCreateDto.setCompanyName(toCreate.getCompanyName());
         companyCreateDto.setCompanyId(toCreate.getId());
         companyCreateDto.setUserId(toCreate.getUser().getId());
         return new ResponseEntity<>(companyCreateDto, HttpStatus.CREATED);
@@ -91,5 +92,10 @@ public class CompanyServiceImpl  implements CompanyService {
         companyRepository.save(toUpdate);
         return  new ResponseEntity<>(companyUpdateDto,HttpStatus.CREATED);
 
+    }
+
+    @Override
+    public Long getAllCompanyByCount() {
+        return (long) companyRepository.findAll().size();
     }
 }

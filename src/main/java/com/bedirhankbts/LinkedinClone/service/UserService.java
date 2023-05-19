@@ -23,4 +23,6 @@ public interface UserService {
     User getUserById(Long userId);
 
     ResponseEntity<UserUpdateDto> userUpdateByUserId(Long userId, UserUpdateRequest updateUser);
+
+    Long getAllUserByCount();
 }

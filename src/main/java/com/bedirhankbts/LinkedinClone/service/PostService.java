@@ -24,4 +24,6 @@ public interface PostService {
     List<PostGetDto> getPostAnswersByPostId(Optional<Long> postId);
 
     List<PostGetDto> getAllUserPost(Optional<Long> userId);
+
+    Long getCountPostByUserId(Long userId);
 }

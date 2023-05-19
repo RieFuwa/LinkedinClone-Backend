@@ -36,7 +36,10 @@ public class CompanyController {
     public List<CompanyGetDto> getAllCompany(){
         return companyService.getAllCompany().stream().map(key-> new CompanyGetDto(key)).toList();
     }
-
+    @GetMapping("/getAllCompanyByCount")
+    public Long getAllCompanyByCount(){
+        return companyService.getAllCompanyByCount();
+    }
     @GetMapping("/{companyId}")
     public CompanyGetDto getCompanyById(@PathVariable("companyId")Long companyId){
         Company company = companyService.getCompanyById(companyId);

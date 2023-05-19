@@ -1,8 +1,8 @@
 package com.bedirhankbts.LinkedinClone.controller.applyJobController;
 
 import com.bedirhankbts.LinkedinClone.dto.applyJobDto.ApplyJobDto;
-import com.bedirhankbts.LinkedinClone.dto.jobDto.JobGetDto;
-import com.bedirhankbts.LinkedinClone.dto.likeDto.LikeDto;
+import com.bedirhankbts.LinkedinClone.dto.queryDto.JobApplyCount;
+import com.bedirhankbts.LinkedinClone.dto.queryDto.TopFiveJob;
 import com.bedirhankbts.LinkedinClone.request.applyJobRequest.ApplyJobCreateRequest;
 import com.bedirhankbts.LinkedinClone.service.ApplyJobService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +27,25 @@ public class ApplyJobController {
         return applyJobService.getAllApplyJob(userId,jobId);
 
     }
-    @GetMapping("/getAllUserApplyJob/{userId}")
+    @GetMapping("/getApplyJobCountByCompanyId/{companyId}")
+    public Long getApplyJobCountByCompanyId(@PathVariable Optional<Long> companyId){
+        return applyJobService.getApplyJobCountByCompanyId(companyId);
+    }
+    @GetMapping("/getApplyJobCountByJobId/{jobId}")
+    public Long getApplyJobCountByJobId(@PathVariable Optional<Long> jobId){
+        return applyJobService.getApplyJobCountByJobId(jobId);
+    }
+    @GetMapping("/getQueryTop5JobsByApplyCount")
+    public List<TopFiveJob> getQueryTop5JobsByApplyCount(){
+        return applyJobService.getQueryTop5JobsByApplyCount();
+    }
+    @GetMapping("/getAllUserApplyJob{userId}")
     public List<ApplyJobDto> getAllUserApplyJob(@RequestParam Optional<Long> userId){
         return applyJobService.getAllUserApplyJob(userId);
+    }
+    @GetMapping("/getAllJobApplyJob{jobId}")
+    public List<ApplyJobDto> getAllJobApplyJob(@RequestParam Optional<Long> jobId){
+        return applyJobService.getAllJobApplyJob(jobId);
     }
     @DeleteMapping("/{applyJobId}")
     public String deleteApplyJobById(@PathVariable("applyJobId") Long applyJobId){

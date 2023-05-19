@@ -2,6 +2,7 @@ package com.bedirhankbts.LinkedinClone.service.Impl;
 
 import com.bedirhankbts.LinkedinClone.dto.roleDto.AddRoleToUserDto;
 import com.bedirhankbts.LinkedinClone.model.Role;
+import com.bedirhankbts.LinkedinClone.model.User;
 import com.bedirhankbts.LinkedinClone.repository.RoleRepository;
 import com.bedirhankbts.LinkedinClone.request.roleRequest.AddRoleByUserCreateRequest;
 import com.bedirhankbts.LinkedinClone.service.RoleService;
@@ -37,14 +38,16 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public ResponseEntity<AddRoleToUserDto> addRoleToUser(AddRoleByUserCreateRequest addRoleByUserCreateRequest) {
-        AddRoleToUserDto addRoleToUserDto = new AddRoleToUserDto();
-        userService.addRoleToUser(addRoleByUserCreateRequest.getUserId(),addRoleByUserCreateRequest.getRoleId());
+
+       userService.addRoleToUser(addRoleByUserCreateRequest.getUserId(),addRoleByUserCreateRequest.getRoleId());
+         User getUser= userService.getUserById(addRoleByUserCreateRequest.getUserId());
         if(addRoleByUserCreateRequest == null){
-            addRoleToUserDto.setMessage("Role not created.");
-            return new ResponseEntity<>(addRoleToUserDto, HttpStatus.BAD_REQUEST);
+
+            return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
 
         }
-        addRoleToUserDto.setMessage("Role created for userId: "+addRoleByUserCreateRequest.getUserId());
+        AddRoleToUserDto addRoleToUserDto = new AddRoleToUserDto(getUser.getId(),getUser.getRoles());
+
         addRoleToUserDto.setUserId(addRoleByUserCreateRequest.getUserId());
         return new ResponseEntity<>(addRoleToUserDto, HttpStatus.CREATED);
 

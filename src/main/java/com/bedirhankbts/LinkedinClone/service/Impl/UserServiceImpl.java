@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<UserCreateDto> createUser(UserCreateRequest newUser) {
+
         UserCreateDto userCreateDto = new UserCreateDto();
         User toCreate= new User();
         if(userRepository.findByUserMail(newUser.getUserMail()) != null) {
@@ -54,6 +55,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(toCreate);
         userCreateDto.setMessage("User successfully created.");
         userCreateDto.setUserId(toCreate.getId());
+        userCreateDto.setUserName(toCreate.getUserName());
         return new ResponseEntity<>(userCreateDto, HttpStatus.CREATED);
     }
     @Override
@@ -81,9 +83,6 @@ public class UserServiceImpl implements UserService {
         toUpdate.setUserUniversity(updateUser.getUserUniversity());
         toUpdate.setUserDetail(updateUser.getUserDetail());
         toUpdate.setUserMail(updateUser.getUserMail());
-        toUpdate.getIsVerified();
-        toUpdate.getCreateDate();
-        toUpdate.getUserPassword();
         toUpdate.setUpdateDate(new Date());
         userUpdateDto.setMessage("User successfully updated.");
         userUpdateDto.setUserId(toUpdate.getId());
@@ -91,6 +90,11 @@ public class UserServiceImpl implements UserService {
         return  new ResponseEntity<>(userUpdateDto,HttpStatus.CREATED);
 
 
+    }
+
+    @Override
+    public Long getAllUserByCount() {
+        return (long) userRepository.findAll().size();
     }
 
     @Override

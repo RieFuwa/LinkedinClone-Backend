@@ -18,4 +18,6 @@ public interface LikeService {
     ResponseEntity<LikeDto> createLike(LikeCreateRequest newLike);
 
     String deleteLikeById(Long likeId);
+
+    Long getCountLikeByUserId(Long userId);
 }

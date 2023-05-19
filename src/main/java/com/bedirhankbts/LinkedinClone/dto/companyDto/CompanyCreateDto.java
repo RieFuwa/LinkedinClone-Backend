@@ -7,4 +7,5 @@ public class CompanyCreateDto {
     private String message;
     private Long companyId;
     private Long userId;
+    private String companyName;
 }

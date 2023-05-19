@@ -21,4 +21,6 @@ public interface CompanyService {
     String deleteCompanyById(Long companyId);
 
     ResponseEntity<CompanyUpdateDto> companyUpdateByCompanyId(Long companyId, CompanyUpdateRequest updateCompany);
+
+    Long getAllCompanyByCount();
 }

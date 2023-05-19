@@ -1,6 +1,8 @@
 package com.bedirhankbts.LinkedinClone.service;
 
 import com.bedirhankbts.LinkedinClone.dto.applyJobDto.ApplyJobDto;
+import com.bedirhankbts.LinkedinClone.dto.queryDto.JobApplyCount;
+import com.bedirhankbts.LinkedinClone.dto.queryDto.TopFiveJob;
 import com.bedirhankbts.LinkedinClone.request.applyJobRequest.ApplyJobCreateRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,4 +19,12 @@ public interface ApplyJobService {
     String deleteApplyJobById(Long applyJobId);
 
     List<ApplyJobDto> getAllUserApplyJob(Optional<Long> userId);
+
+    List<ApplyJobDto> getAllJobApplyJob(Optional<Long> jobId);
+
+    Long getApplyJobCountByCompanyId(Optional<Long> companyId);
+
+    Long getApplyJobCountByJobId(Optional<Long> jobId);
+
+    List<TopFiveJob> getQueryTop5JobsByApplyCount();
 }

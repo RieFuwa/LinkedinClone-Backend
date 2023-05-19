@@ -22,7 +22,10 @@ public class LikeController {
         return likeService.getAllLikesWithParam(userId,postId);
 
     }
-
+    @GetMapping("/getCountLikeByUserId/{userId}")
+    public Long getCountLikeByUserId(@PathVariable("userId") Long userId){
+        return likeService.getCountLikeByUserId(userId);
+    }
     @GetMapping("/{likeId}")
     public LikeDto getLikeById(@PathVariable("likeId")Long likeId){
         Like like = likeService.getLikeById(likeId);

@@ -73,4 +73,9 @@ public class LikeServiceImpl implements LikeService {
         likeRepository.deleteById(likeId);
         return "Like with id " +likeId+ " has been deleted success.";
     }
+
+    @Override
+    public Long getCountLikeByUserId(Long userId) {
+        return likeRepository.countByUserId(userId);
+    }
 }

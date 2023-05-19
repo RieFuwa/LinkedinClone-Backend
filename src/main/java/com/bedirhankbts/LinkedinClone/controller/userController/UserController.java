@@ -34,6 +34,11 @@ public class UserController {
         return userService.getAllUser();
     }
 
+    @GetMapping("/getAllUserByCount")
+    public Long getAllUserByCount(){
+        return userService.getAllUserByCount();
+    }
+
     @GetMapping("/{userId}")
     @Cacheable(key = "#userId",value = "User")
     public User getUserById(@PathVariable("userId")Long userId){

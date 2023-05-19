@@ -17,6 +17,8 @@ public class JobGetDto {
     private Long companyId;
     private String companyName;
 
+    private String companyAddress;
+
     private Date createDate;
     private List<ApplyJobDto> applyJobList;
 
@@ -24,6 +26,7 @@ public class JobGetDto {
         this.id=entity.getId();
         this.jobType=entity.getJobType();
         this.companyId=entity.getCompany().getId();
+        this.companyAddress=entity.getCompany().getCompanyAddress();
         this.companyName=entity.getCompany().getCompanyName();
         this.jobDetails=entity.getJobDetails();
         this.createDate=entity.getCreateDate();
