@@ -1,5 +1,6 @@
 package com.bedirhankbts.LinkedinClone.service.Impl;
 
+import com.bedirhankbts.LinkedinClone.dto.postDto.PostCreateDto;
 import com.bedirhankbts.LinkedinClone.dto.userDto.UserCreateDto;
 import com.bedirhankbts.LinkedinClone.dto.userDto.UserUpdateDto;
 import com.bedirhankbts.LinkedinClone.model.Role;
@@ -7,6 +8,7 @@ import com.bedirhankbts.LinkedinClone.model.User;
 import com.bedirhankbts.LinkedinClone.repository.RoleRepository;
 import com.bedirhankbts.LinkedinClone.repository.UserRepository;
 import com.bedirhankbts.LinkedinClone.request.userRequest.UserCreateRequest;
+import com.bedirhankbts.LinkedinClone.request.userRequest.UserLoginRequest;
 import com.bedirhankbts.LinkedinClone.request.userRequest.UserUpdateRequest;
 import com.bedirhankbts.LinkedinClone.service.UserService;
 import jakarta.transaction.Transactional;
@@ -96,6 +98,24 @@ public class UserServiceImpl implements UserService {
     public Long getAllUserByCount() {
         return (long) userRepository.findAll().size();
     }
+
+    public ResponseEntity<UserCreateDto> loginUser(UserLoginRequest userLoginRequest) {
+        UserCreateDto userCreateDto = new UserCreateDto();
+        User loginToUser = userRepository.findByUserMailAndUserPassword(userLoginRequest.getUserMail(), userLoginRequest.getUserPassword());
+        if (loginToUser == null) {
+            userCreateDto.setMessage("Hatalı şifre veya mail lütfen kontrol ediniz.");
+            return new ResponseEntity<>(userCreateDto, HttpStatus.UNAUTHORIZED);
+
+        }
+        User InLogin = userRepository.findByUserMail(userLoginRequest.getUserMail());
+        userCreateDto.setMessage("User successfully login");
+        userCreateDto.setUserId(InLogin.getId());
+        userCreateDto.setUserMail(InLogin.getUserMail());
+        userCreateDto.setUserName(InLogin.getUserName());
+        return new ResponseEntity<>(userCreateDto,HttpStatus.OK);
+
+    }
+
 
     @Override
     public List<User> getAllUser() {

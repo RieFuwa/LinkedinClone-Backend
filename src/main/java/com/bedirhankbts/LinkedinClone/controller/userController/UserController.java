@@ -4,6 +4,7 @@ import com.bedirhankbts.LinkedinClone.dto.userDto.UserCreateDto;
 import com.bedirhankbts.LinkedinClone.dto.userDto.UserUpdateDto;
 import com.bedirhankbts.LinkedinClone.model.User;
 import com.bedirhankbts.LinkedinClone.request.userRequest.UserCreateRequest;
+import com.bedirhankbts.LinkedinClone.request.userRequest.UserLoginRequest;
 import com.bedirhankbts.LinkedinClone.request.userRequest.UserUpdateRequest;
 import com.bedirhankbts.LinkedinClone.service.UserService;
 import org.springframework.cache.annotation.Cacheable;
@@ -39,6 +40,10 @@ public class UserController {
         return userService.getAllUserByCount();
     }
 
+    @PostMapping(value = "/login")
+    public ResponseEntity<UserCreateDto> loginUser(@RequestBody UserLoginRequest userLoginRequest) {
+        return userService.loginUser(userLoginRequest);
+    }
     @GetMapping("/{userId}")
     @Cacheable(key = "#userId",value = "User")
     public User getUserById(@PathVariable("userId")Long userId){
