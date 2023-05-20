@@ -16,6 +16,7 @@ public class PostGetDto {
     private Long id;
     private Long userId;
     private String userName;
+    private Boolean isVerified;
     private Long connectedPostId;
 
     private String postTitle;
@@ -29,7 +30,7 @@ public class PostGetDto {
         this.id=entity.getId();
         this.userId=entity.getUser().getId();
         this.userName=entity.getUser().getUserName();
-
+        this.isVerified=entity.getUser().getIsVerified();
         if(entity.getConnectedPost()!=null){
             this.connectedPostId=entity.getConnectedPost().getId();
         }

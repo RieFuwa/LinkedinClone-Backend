@@ -3,8 +3,10 @@ package com.bedirhankbts.LinkedinClone.service.Impl;
 import com.bedirhankbts.LinkedinClone.dto.postDto.PostCreateDto;
 import com.bedirhankbts.LinkedinClone.dto.userDto.UserCreateDto;
 import com.bedirhankbts.LinkedinClone.dto.userDto.UserUpdateDto;
+import com.bedirhankbts.LinkedinClone.model.Company;
 import com.bedirhankbts.LinkedinClone.model.Role;
 import com.bedirhankbts.LinkedinClone.model.User;
+import com.bedirhankbts.LinkedinClone.repository.CompanyRepository;
 import com.bedirhankbts.LinkedinClone.repository.RoleRepository;
 import com.bedirhankbts.LinkedinClone.repository.UserRepository;
 import com.bedirhankbts.LinkedinClone.request.userRequest.UserCreateRequest;
@@ -33,6 +35,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private CompanyRepository companyRepository;
 
     @Override
     public ResponseEntity<UserCreateDto> createUser(UserCreateRequest newUser) {
@@ -40,8 +44,8 @@ public class UserServiceImpl implements UserService {
         UserCreateDto userCreateDto = new UserCreateDto();
         User toCreate= new User();
         if(userRepository.findByUserMail(newUser.getUserMail()) != null) {
-            userCreateDto.setMessage("Mail already in use.");
-            return new ResponseEntity<>(userCreateDto, HttpStatus.BAD_REQUEST);
+            userCreateDto.setMessage("Girdiğiniz E-mail adresi kullanılmaktadır.");
+            return new ResponseEntity<>(userCreateDto, HttpStatus.CONFLICT);
         }
         toCreate.setId(newUser.getId());
         toCreate.setUserName(newUser.getUserName());
@@ -56,6 +60,7 @@ public class UserServiceImpl implements UserService {
         toCreate.setIsVerified(newUser.getIsVerified());
         userRepository.save(toCreate);
         userCreateDto.setMessage("User successfully created.");
+        userCreateDto.setUserMail(toCreate.getUserMail());
         userCreateDto.setUserId(toCreate.getId());
         userCreateDto.setUserName(toCreate.getUserName());
         return new ResponseEntity<>(userCreateDto, HttpStatus.CREATED);
@@ -103,13 +108,24 @@ public class UserServiceImpl implements UserService {
         UserCreateDto userCreateDto = new UserCreateDto();
         User loginToUser = userRepository.findByUserMailAndUserPassword(userLoginRequest.getUserMail(), userLoginRequest.getUserPassword());
         if (loginToUser == null) {
-            userCreateDto.setMessage("Hatalı şifre veya mail lütfen kontrol ediniz.");
+            userCreateDto.setMessage("E-mail adresiniz veya parolanız hatalıdır. Lütfen tekrar deneyiniz.");
             return new ResponseEntity<>(userCreateDto, HttpStatus.UNAUTHORIZED);
 
         }
         User InLogin = userRepository.findByUserMail(userLoginRequest.getUserMail());
+        Company userToCompanyId = companyRepository.findByUserId(InLogin.getId());
+        if(userToCompanyId==null){
+            userCreateDto.setMessage("User successfully login");
+            userCreateDto.setUserId(InLogin.getId());
+            userCreateDto.setRoleList(loginToUser.getRoles());
+            userCreateDto.setUserMail(InLogin.getUserMail());
+            userCreateDto.setUserName(InLogin.getUserName());
+            return new ResponseEntity<>(userCreateDto,HttpStatus.OK);
+        }
         userCreateDto.setMessage("User successfully login");
         userCreateDto.setUserId(InLogin.getId());
+        userCreateDto.setCompanyId(userToCompanyId.getId());
+        userCreateDto.setRoleList(loginToUser.getRoles());
         userCreateDto.setUserMail(InLogin.getUserMail());
         userCreateDto.setUserName(InLogin.getUserName());
         return new ResponseEntity<>(userCreateDto,HttpStatus.OK);

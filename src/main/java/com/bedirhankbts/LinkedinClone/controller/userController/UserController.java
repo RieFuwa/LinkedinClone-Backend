@@ -44,6 +44,7 @@ public class UserController {
     public ResponseEntity<UserCreateDto> loginUser(@RequestBody UserLoginRequest userLoginRequest) {
         return userService.loginUser(userLoginRequest);
     }
+
     @GetMapping("/{userId}")
     @Cacheable(key = "#userId",value = "User")
     public User getUserById(@PathVariable("userId")Long userId){
